@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HK Immigration</title>
+    <meta name="author" content="David Grzyb">
+    <meta name="description" content="">
+
+    <!-- Tailwind -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+        .font-family-karla { font-family: karla; }
+        .bg-sidebar { background: #3d68ff; }
+        .cta-btn { color: #3d68ff; }
+        .upgrade-btn { background: #1947ee; }
+        .upgrade-btn:hover { background: #0038fd; }
+        .active-nav-link { background: #1947ee; }
+        .nav-item:hover { background: #1947ee; }
+        .account-link:hover { background: #3d68ff; }
+    </style>
+</head>
+<body class="bg-gray-100 font-family-karla flex">
+
+    <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
+        <div class="p-6">
+            <a href="./index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">HK Admin</a>
+            <a href="./Leads.html" class="block w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+                <i class="fas fa-plus mr-3"></i> New Lead
+            </a>            
+        </div>
+        <nav class="text-white text-base font-semibold pt-3">
+            <a href="./index.html" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
+                <i class="fas fa-tachometer-alt mr-3"></i>
+                Dashboard
+            </a>
+            <a href="./Leads.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-sticky-note mr-3"></i>
+                Leads
+            </a>
+            <a href="./Visa.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-table mr-3"></i>
+                Visa Info
+            </a>
+            <a href="./Detailed Report.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item" id="user-management-link">
+                <i class="fas fa-tablet-alt mr-3"></i>
+                Detailed Report
+            </a>
+            
+            <a href="./finance.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item finance manager owner-director">
+                <i class="fas fa-money-bill-alt mr-3"></i>
+                Finance
+            </a>
+            <a href="./Annual Summary.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-align-left mr-3"></i>
+                Annual Summary
+            </a>
+            <a href="./Annual Summary.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-calendar mr-3"></i>
+                Calendar
+            </a>
+            <a href="./User Management.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-tablet-alt mr-3"></i>
+                User Management
+            </a>
+    </aside>
+
+    <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
+        <!-- Desktop Header -->
+        <header class="w-full items-center bg-white py-2 px-6 hidden sm:flex">
+            <div class="w-1/2"></div>
+            <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
+                <button @click="isOpen = !isOpen" class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
+                    <img src="../logo.jpeg">
+                </button>
+                <button x-show="isOpen" @click="isOpen = false" class="h-full w-full fixed inset-0 cursor-default"></button>
+                <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
+                    <a href="./account.html" class="block px-4 py-2 account-link hover:text-white">Account</a>
+                    <a href="./support.html" class="block px-4 py-2 account-link hover:text-white">Support</a>
+                    <a href="./logout.html" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Header & Nav -->
+        <header x-data="{ isOpen: false }" class="w-full bg-sidebar py-5 px-6 sm:hidden">
+            <div class="flex items-center justify-between">
+                <a href="./index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">HK Admin</a>
+                <button @click="isOpen = !isOpen" class="text-white text-3xl focus:outline-none">
+                    <i x-show="!isOpen" class="fas fa-bars"></i>
+                    <i x-show="isOpen" class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Dropdown Nav -->
+            <nav :class="isOpen ? 'flex': 'hidden'" class="flex flex-col pt-4">
+                <a href="./index.html" class="flex items-center active-nav-link text-white py-2 pl-4 nav-item">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="./Leads.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-sticky-note mr-3"></i>
+                    Leads
+                </a>
+                <a href="./Visa.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-table mr-3"></i>
+                    Visa Info
+                </a>
+                <a href="./Detailed Report.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item" id="user-management-link">
+                    <i class="fas fa-tablet-alt mr-3"></i>
+                    Detailed Report
+                </a>
+                <a href="./Annual Summary.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-align-left mr-3"></i>
+                    Annual Summary
+                </a>
+               
+                <a href="./User Management.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-tablet-alt mr-3"></i>
+                    User Management
+                </a>
+                <a href="./calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-calendar mr-3"></i>
+                    Calendar
+                </a>
+                <a href="/Users/mannuverma/Downloads/MMHKI/Menu/support.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-cogs mr-3"></i>
+                    Support
+                </a>
+                <a href="./account.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-user mr-3"></i>
+                    My Account
+                </a>
+                <a href="./logout.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-sign-out-alt mr-3"></i>
+                    Sign Out
+                </a>
+            </nav>
+        </header>
+            <!-- <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+                <i class="fas fa-plus mr-3"></i> New Report
+            </button> -->
+    
+        <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
+    <main class="w-full flex-grow p-6">
+        <h1 class="text-3xl text-black pb-6">Update Lead</h1>
+
+        <!-- Update Lead Form -->
+        <div class="w-full mt-6">
+            <form id="updateLeadForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <!-- Lead ID -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="leadId">
+                        Lead ID (Integer)
+                    </label>
+                    <input id="leadId" name="leadId" type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter Lead ID (Integer)">
+                </div>
+
+                <!-- Update Type -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="leadUpdateType">
+                        Update Type
+                    </label>
+                    <select id="leadUpdateType" name="leadUpdateType" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="in-person">In Person</option>
+                        <option value="call">Call</option>
+                    </select>
+                </div>
+
+                <!-- Lead Details -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="leadDetails">
+                        Lead Details
+                    </label>
+                    <textarea id="leadDetails" name="leadDetails" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Details of the update..."></textarea>
+                </div>
+
+                <!-- Lead Status -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="leadStatus">
+                        Lead Status
+                    </label>
+                    <select id="leadStatus" name="leadStatus" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="active">Active</option>
+                        <option value="follow-up">Follow Up</option>
+                        <option value="interested">Interested</option>
+                        <option value="not-interested">Not Interested</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                </div>
+
+                <!-- Next Steps -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="nextSteps">
+                        Next Steps
+                    </label>
+                    <textarea id="nextSteps" name="nextSteps" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Next steps for the lead..."></textarea>
+                </div>
+
+                <!-- Documents -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="leadDocuments">
+                        Documents
+                    </label>
+                    <input id="leadDocuments" name="leadDocuments" type="file" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+
+                <!-- Personal Details -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="leadPersonalDetails">
+                        Personal Details
+                    </label>
+                    <textarea id="leadPersonalDetails" name="leadPersonalDetails" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter personal details..."></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex items-center justify-between">
+                    <button id="updateLeadBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                        Update Lead
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Display Leads Table -->
+        <div class="w-full mt-12">
+            <p class="text-xl pb-3 flex items-center">
+                <i class="fas fa-tasks mr-3"></i> Recent Leads
+            </p>
+            <div class="bg-white overflow-auto">
+                <table class="min-w-full bg-white">
+                    <thead class="bg-gray-800 text-white">
+                        <tr>
+                            <th class="w-1/6 text-left py-3 px-4 uppercase font-semibold text-sm">Lead ID</th>
+                            <th class="w-1/6 text-left py-3 px-4 uppercase font-semibold text-sm">Update Type</th>
+                            <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Lead Details</th>
+                            <th class="w-1/6 text-left py-3 px-4 uppercase font-semibold text-sm">Lead Status</th>
+                            <th class="w-1/6 text-left py-3 px-4 uppercase font-semibold text-sm">Next Steps</th>
+                            <th class="w-1/6 text-left py-3 px-4 uppercase font-semibold text-sm">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leadsTableBody" class="text-gray-700">
+                        <!-- Example lead row, replace with dynamically generated rows -->
+                        <tr data-lead-id="1">
+                            <td class="w-1/6 text-left py-3 px-4">1</td>
+                            <td class="w-1/6 text-left py-3 px-4">Call</td>
+                            <td class="w-1/4 text-left py-3 px-4">Lead details here...</td>
+                            <td class="w-1/6 text-left py-3 px-4">Active</td>
+                            <td class="w-1/6 text-left py-3 px-4">Next steps here...</td>
+                            <td class="w-1/6 text-left py-3 px-4">
+                                <div class="relative inline-block text-left">
+                                    <button class="flex items-center justify-center w-8 h-8 bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none" onclick="toggleOptionsMenu(event)">
+                                        <svg class="w-4 h-4 fill-current text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4zm-6-2a2 2 0 114 0 2 2 0 01-4 0zm12 0a2 2 0 114 0 2 2 0 01-4 0z"/></svg>
+                                    </button>
+                                    <div class="hidden absolute right-0 mt-2 py-2 w-48 bg-white border rounded-lg shadow-xl" id="optionsMenuContent">
+                                        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-300" onclick="editLead(event)">Edit</a>
+                                        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-300" onclick="deleteLead(event)">Delete</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Repeat rows dynamically based on leads -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-white text-right p-4">
+        Powered By <a target="_blank" href="https://themagnetizemarketing.in" class="underline">The Magnetize Marketing</a>.
+    </footer>
+</div>
+
+<script>
+    // Function to populate leads table
+    function populateLeadsTable() {
+        fetch('readLeads.php')
+            .then(response => response.json())
+            .then(leadsData => {
+                const leadsTableBody = document.getElementById('leadsTableBody');
+                leadsTableBody.innerHTML = '';
+
+                leadsData.forEach(lead => {
+                    const row = document.createElement('tr');
+                    row.setAttribute('data-lead-id', lead.id);
+
+                    row.innerHTML = `
+                        <td class="w-1/6 text-left py-3 px-4">${lead.id}</td>
+                        <td class="w-1/6 text-left py-3 px-4">${lead.updateType}</td>
+                        <td class="w-1/4 text-left py-3 px-4">${lead.details}</td>
+                        <td class="w-1/6 text-left py-3 px-4">${lead.status}</td>
+                        <td class="w-1/6 text-left py-3 px-4">${lead.nextSteps}</td>
+                        <td class="w-1/6 text-left py-3 px-4">
+                            <div class="relative inline-block text-left">
+                                <button class="flex items-center justify-center w-8 h-8 bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none" onclick="toggleOptionsMenu(event)">
+                                    <svg class="w-4 h-4 fill-current text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4zm-6-2a2 2 0 114 0 2 2 0 01-4 0zm12 0a2 2 0 114 0 2 2 0 01-4 0z"/></svg>
+                                </button>
+                                <div class="hidden absolute right-0 mt-2 py-2 w-48 bg-white border rounded-lg shadow-xl" id="optionsMenuContent">
+                                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-300" onclick="editLead(event)">Edit</a>
+                                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-300" onclick="deleteLead(event)">Delete</a>
+                                </div>
+                            </div>
+                        </td>
+                    `;
+
+                    leadsTableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching leads:', error));
+    }
+
+    document.addEventListener('DOMContentLoaded', populateLeadsTable);
+
+    // Toggle options menu visibility
+    function toggleOptionsMenu(event) {
+        event.stopPropagation();
+        const optionsMenuContent = event.target.closest('button').nextElementSibling;
+        optionsMenuContent.classList.toggle('hidden');
+    }
+
+    // Edit lead logic
+    function editLead(event) {
+        event.preventDefault();
+        const leadId = event.target.closest('tr').getAttribute('data-lead-id');
+
+        fetch(`readLead.php?id=${leadId}`)
+            .then(response => response.json())
+            .then(lead => {
+                document.getElementById('leadId').value = lead.id;
+                document.getElementById('leadUpdateType').value = lead.updateType;
+                document.getElementById('leadDetails').value = lead.details;
+                document.getElementById('leadStatus').value = lead.status;
+                document.getElementById('nextSteps').value = lead.nextSteps;
+                document.getElementById('leadPersonalDetails').value = lead.personalDetails;
+            })
+            .catch(error => console.error('Error fetching lead:', error));
+    }
+
+    // Delete lead logic
+    function deleteLead(event) {
+        event.preventDefault();
+        const leadId = event.target.closest('tr').getAttribute('data-lead-id');
+
+        fetch('deleteLead.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: leadId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            populateLeadsTable();
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    // Example of form submission (Update Lead button)
+    const updateLeadForm = document.getElementById('updateLeadForm');
+    updateLeadForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(updateLeadForm);
+
+        fetch('updateLead.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            populateLeadsTable();
+        })
+        .catch(error => console.error('Error:', error));
+    });
+</script>
+
+
+        
+    </div>
+
+    <!-- AlpineJS -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+</body>
+</html>

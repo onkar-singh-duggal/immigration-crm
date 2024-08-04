@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        /* Custom CSS from index.html */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .text-xl {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+            font-weight: 600;
+        }
+
+        .text-gray-600 {
+            color: #4b5563;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-8 {
+            margin-top: 2rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+    </style>
+    <script>
+        // JavaScript for redirecting after 5 seconds
+        setTimeout(function() {
+            window.location.href = "./Login.html";
+        }, 5000);
+    </script>
+</head>
+
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+    <div class="container">
+        <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold mb-6 text-center">Logout</h2>
+            <p class="text-sm text-gray-600 mt-4 text-center">You have been logged out.</p>
+            <p class="text-sm text-gray-600 mt-4 text-center">You will be redirected to the login page in 5 seconds...</p>
+        </div>
+    </div>
+</body>
+
+</html>

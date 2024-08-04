@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HK Immigration</title>
+    <meta name="author" content="David Grzyb">
+    <meta name="description" content="">
+
+    <!-- Tailwind CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/23412c6a8d.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+        .font-family-karla { font-family: karla; }
+        .bg-sidebar { background: #3d68ff; }
+        .cta-btn { color: #3d68ff; }
+        .upgrade-btn { background: #1947ee; }
+        .upgrade-btn:hover { background: #0038fd; }
+        .active-nav-link { background: #1947ee; }
+        .nav-item:hover { background: #1947ee; }
+        .account-link:hover { background: #3d68ff; }
+        .fixed-bottom { position: fixed; bottom: 0; left: 0; right: 0; }
+        .dropdown-menu { min-width: 12rem; }
+        .dropdown:hover .dropdown-menu { display: block; }
+        .scrollable-content { max-height: calc(100vh - 8rem); overflow-y: auto; }
+        .filter-btn { display: inline-block; padding: 0.5rem 1rem; background-color: #4a90e2; color: white; border: none; border-radius: 0.25rem; cursor: pointer; }
+        .filter-btn:hover { background-color: #357bd8; }
+    </style>
+</head>
+<body class="bg-gray-100 font-family-karla flex">
+
+<!-- Sidebar -->
+<aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
+    <div class="p-6">
+        <a href="./index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">HK Admin</a>
+        <a href="./Leads.html" class="block w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+            <i class="fas fa-plus mr-3"></i> New Lead
+        </a>            
+    </div>
+    <nav class="text-white text-base font-semibold pt-3">
+        <a href="./index.html" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
+            <i class="fas fa-tachometer-alt mr-3"></i>
+            Dashboard
+        </a>
+        <a href="./Leads.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-sticky-note mr-3"></i>
+            Leads
+        </a>
+        <a href="./Visa.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-table mr-3"></i>
+            Visa Info
+        </a>
+        <a href="./Detailed Report.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item" id="user-management-link">
+            <i class="fas fa-tablet-alt mr-3"></i>
+            Detailed Report
+        </a>
+        
+        <a href="./finance.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item finance manager owner-director">
+            <i class="fas fa-money-bill-alt mr-3"></i>
+            Finance
+        </a>
+        <a href="./Annual Summary.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-align-left mr-3"></i>
+            Annual Summary
+        </a>
+        <a href="./calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-calendar mr-3"></i>
+            Calendar
+        </a>
+        <a href="./User Management.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-tablet-alt mr-3"></i>
+            User Management
+        </a>
+</aside>
+
+<div class="relative w-full flex flex-col h-screen overflow-y-hidden">
+    <!-- Desktop Header -->
+    <header class="w-full items-center bg-white py-2 px-6 hidden sm:flex">
+        <div class="w-1/2"></div>
+        <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
+            <button @click="isOpen = !isOpen" class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
+                <img src="../logo.jpeg">
+            </button>
+            <button x-show="isOpen" @click="isOpen = false" class="h-full w-full fixed inset-0 cursor-default"></button>
+            <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
+                <a href="./account.html" class="block px-4 py-2 account-link hover:text-white">Account</a>
+                <a href="./support.html" class="block px-4 py-2 account-link hover:text-white">Support</a>
+                <a href="./logout.html" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Header & Nav -->
+    <header x-data="{ isOpen: false }" class="w-full bg-sidebar py-5 px-6 sm:hidden">
+        <div class="flex items-center justify-between">
+            <a href="./index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">HK Admin</a>
+            <button @click="isOpen = !isOpen" class="text-white text-3xl focus:outline-none">
+                <i x-show="!isOpen" class="fas fa-bars"></i>
+                <i x-show="isOpen" class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Dropdown Nav -->
+        <nav :class="isOpen ? 'flex': 'hidden'" class="flex flex-col pt-4">
+            <a href="./index.html" class="flex items-center active-nav-link text-white py-2 pl-4 nav-item">
+                <i class="fas fa-tachometer-alt mr-3"></i>
+                Dashboard
+            </a>
+            <a href="./Leads.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                <i class="fas fa-sticky-note mr-3"></i>
+                Leads
+            </a>
+            <a href="./Visa.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                <i class="fas fa-table mr-3"></i>
+                Visa Info
+            </a>
+            <a href="./Detailed Report.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item" id="user-management-link">
+                <i class="fas fa-tablet-alt mr-3"></i>
+                Detailed Report
+            </a>
+            <a href="./Annual Summary.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                <i class="fas fa-align-left mr-3"></i>
+                Annual Summary
+            </a>
+           
+            <a href="./User Management.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                <i class="fas fa-tablet-alt mr-3"></i>
+                User Management
+            </a>
+            <a href="./calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                <i class="fas fa-calendar mr-3"></i>
+                Calendar
+            </a>
+            <a href="./support.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                <i class="fas fa-cogs mr-3"></i>
+                Support
+            </a>
+            <a href="./account.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                <i class="fas fa-user mr-3"></i>
+                My Account
+            </a>
+            <a href="./logout.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                <i class="fas fa-sign-out-alt mr-3"></i>
+                Sign Out
+            </a>
+        </nav>
+    </header>
+    <body class="bg-gray-200 h-screen flex flex-col">
+        <div class="w-full h-full overflow-hidden flex flex-col">
+            <main class="w-full flex-grow p-4 overflow-auto scrollable-content">
+                <h1 class="text-3xl text-black pb-4">Sales Dashboard</h1>
+    
+                <!-- Sales Process Card -->
+                <div class="p-4 bg-white border rounded-lg shadow mb-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-lg font-semibold">Sales Process</span>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-6 gap-4">
+                        <!-- Route to Visa Counselor -->
+                        <div class="lg:col-span-2">
+                            <span class="font-semibold">Route to Visa Counselor</span>
+                            <input type="text" placeholder="Search Applicants..." class="w-full p-2 border rounded mb-2">
+                            <select class="w-full p-2 border rounded mb-2">
+                                <option>Student 1</option>
+                                <option>Student 2</option>
+                                <option>Student 3</option>
+                            </select>
+                            <button class="w-full bg-blue-500 text-white p-2 rounded mb-4">Send to Visa Counselor</button>
+                            <div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="task1" class="mr-2">
+                                    <label for="task1">Assign Lead to Visa Counselor</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="task2" class="mr-2">
+                                    <label for="task2">Set Follow-up Date</label>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Route to Visa Filler -->
+                        <div class="lg:col-span-2">
+                            <span class="font-semibold">Route to Visa Filler</span>
+                            <input type="text" placeholder="Search Applicants..." class="w-full p-2 border rounded mb-2">
+                            <select class="w-full p-2 border rounded mb-2">
+                                <option>Student 1</option>
+                                <option>Student 2</option>
+                                <option>Student 3</option>
+                            </select>
+                            <button class="w-full bg-blue-500 text-white p-2 rounded mb-4">Send to Visa Filler</button>
+                            <div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="task3" class="mr-2">
+                                    <label for="task3">Assign Lead to Visa Filler</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="task4" class="mr-2">
+                                    <label for="task4">Set Follow-up Date</label>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Update Offer Letter Status -->
+                        <div class="lg:col-span-2">
+                            <span class="font-semibold">Update Offer Letter Status</span>
+                            <input type="text" placeholder="Search Applicants..." class="w-full p-2 border rounded mb-2">
+                            <select class="w-full p-2 border rounded mb-2">
+                                <option>Student 1</option>
+                                <option>Student 2</option>
+                                <option>Student 3</option>
+                            </select>
+                            <button class="w-full bg-blue-500 text-white p-2 rounded mb-4">Update Offer Letter Status</button>
+                            <div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="task5" class="mr-2">
+                                    <label for="task5">Offer Letter Sent</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="task6" class="mr-2">
+                                    <label for="task6">Offer Letter Accepted</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="task7" class="mr-2">
+                                    <label for="task7">Offer Letter Rejected</label>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Update Fee Payment Status -->
+                        <div class="lg:col-span-2">
+                            <span class="font-semibold">Update Fee Payment Status</span>
+                            <input type="text" placeholder="Search Applicants..." class="w-full p-2 border rounded mb-2">
+                            <select class="w-full p-2 border rounded mb-2">
+                                <option>Student 1</option>
+                                <option>Student 2</option>
+                                <option>Student 3</option>
+                            </select>
+                            <button class="w-full bg-blue-500 text-white p-2 rounded mb-4">Update Fee Payment Status</button>
+                            <div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="task8" class="mr-2">
+                                    <label for="task8">Fee Paid</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="task9" class="mr-2">
+                                    <label for="task9">Fee Pending</label>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Update Embassy Fee Payment Status -->
+                        <div class="lg:col-span-2">
+                            <span class="font-semibold">Update Embassy Fee Payment Status</span>
+                            <input type="text" placeholder="Search Applicants..." class="w-full p-2 border rounded mb-2">
+                            <select class="w-full p-2 border rounded mb-2">
+                                <option>Student 1</option>
+                                <option>Student 2</option>
+                                <option>Student 3</option>
+                            </select>
+                            <button class="w-full bg-blue-500 text-white p-2 rounded mb-4">Update Embassy Fee Payment Status</button>
+                            <div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="task10" class="mr-2">
+                                    <label for="task10">Embassy Fee Paid</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="task11" class="mr-2">
+                                    <label for="task11">Embassy Fee Pending</label>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Schedule Appointment -->
+                        <div class="lg:col-span-2">
+                            <span class="font-semibold">Schedule Appointment</span>
+                            <input type="text" placeholder="Search Applicants..." class="w-full p-2 border rounded mb-2">
+                            <select class="w-full p-2 border rounded mb-2">
+                                <option>Student 1</option>
+                                <option>Student 2</option>
+                                <option>Student 3</option>
+                            </select>
+                            <button class="w-full bg-blue-500 text-white p-2 rounded mb-4">Schedule Appointment</button>
+                            <div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="task12" class="mr-2">
+                                    <label for="task12">Set Appointment</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="task13" class="mr-2">
+                                    <label for="task13">Confirm Appointment</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="task14" class="mr-2">
+                                    <label for="task14">Reschedule Appointment</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Recent Activity Card -->
+<div class="p-4 bg-white border rounded-lg shadow">
+    <div class="flex justify-between items-center mb-4">
+        <span class="text-lg font-semibold">Recent Activity</span>
+        <div>
+            <label for="activityFilter" class="sr-only">Filter by Activity:</label>
+            <select id="activityFilter" class="block w-40 py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <option value="all">All Activities</option>
+                <option value="visa">Sent to Visa Counselor</option>
+                <option value="payment">Fee Payment Status Updated</option>
+                <option value="offer">Offer Letter Sent</option>
+                <!-- Add more filter options as needed -->
+            </select>
+        </div>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+            <thead class="bg-gray-800 text-white">
+                <tr>
+                    <th class="w-1/2 lg:w-1/6 text-left py-3 px-4 uppercase font-semibold text-sm">Student Name</th>
+                    <th class="w-1/2 lg:w-1/6 text-left py-3 px-4 uppercase font-semibold text-sm">Activity</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-700" id="activityTableBody">
+                <tr>
+                    <td class="text-left py-3 px-4">Student 1</td>
+                    <td class="text-left py-3 px-4">Sent to Visa Counselor</td>
+                </tr>
+                <tr>
+                    <td class="text-left py-3 px-4">Student 2</td>
+                    <td class="text-left py-3 px-4">Fee Payment Status Updated</td>
+                </tr>
+                <tr>
+                    <td class="text-left py-3 px-4">Student 3</td>
+                    <td class="text-left py-3 px-4">Offer Letter Sent</td>
+                </tr>
+                <!-- Add more rows for additional activities -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterSelect = document.getElementById('activityFilter');
+        const activityTableBody = document.getElementById('activityTableBody');
+        const rows = Array.from(activityTableBody.getElementsByTagName('tr'));
+
+        filterSelect.addEventListener('change', function() {
+            const selectedFilter = filterSelect.value.toLowerCase();
+            rows.forEach(row => {
+                const activityText = row.children[1].textContent.toLowerCase();
+                if (selectedFilter === 'all' || activityText.includes(selectedFilter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
+        <!-- JavaScript -->
+        <script>
+            // Ensure dropdown menu visibility toggle
+            document.querySelectorAll('.dropdown').forEach(dropdown => {
+                dropdown.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    this.querySelector('.dropdown-menu').classList.toggle('hidden');
+                });
+            });
+        </script>
+    </body>
+    
+    </html>
+
+       <!-- Footer -->
+       <footer class="w-full bg-white text-right p-4">
+        Powered By <a target="_blank" href="https://themagnetizemarketing.in" class="underline">The Magnetize Marketing</a>.
+        </footer>
+    </div>
+  <!-- AlpineJS -->
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+  <!-- Font Awesome -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+
+    <!-- Script to Initialize Bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
